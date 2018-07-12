@@ -14,14 +14,14 @@ public class HomePageTest extends Controller{
 	HomePage homepage;
 	String network_name;
 	@BeforeMethod
-	public void start(){
+	public void prepareTest(){
 		initialize();
 		loginpage=new LoginPage();
 		homepage=loginpage.login("System Administrator");
 	}
 	
 	@AfterMethod
-	public void shutdown(){
+	public void terminateTest(){
 		driver.close();
 	}
 

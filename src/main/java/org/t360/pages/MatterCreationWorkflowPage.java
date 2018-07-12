@@ -1,19 +1,20 @@
 package org.t360.pages;
 
-import java.util.Set;
+import java.util.List;
 
-import org.apache.commons.net.imap.IMAPClient.SEARCH_CRITERIA;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.t360.controller.Controller;
+import org.t360.util.Utility;
 
 public class MatterCreationWorkflowPage extends Controller{
 	
 	
 
-	
+	String xpath="//div[text()='Matter Creation Workflow']";
 	@FindBy(xpath="//div[text()='Matter Creation Workflow']")
 	WebElement matterCreationWorkflow_text;
 	
@@ -29,6 +30,9 @@ public class MatterCreationWorkflowPage extends Controller{
 	
 	@FindBy(xpath="//input[@name='WorkareaPopupTreeControl:PopupButton']")
 	WebElement workArea_popupButton;
+	
+	@FindBy(xpath="//select[@name='StatusDropDown']")
+	WebElement Status_dropdown;
 
 	@FindBy(xpath="//input[@value='Next']")
 	WebElement next_button;
@@ -50,42 +54,58 @@ public class MatterCreationWorkflowPage extends Controller{
 	public boolean validateMatterCreationWorkflowPage(){
 		
 		driver.switchTo().frame(2);
-		return matterCreationWorkflow_text.isDisplayed();
+		boolean result=matterCreationWorkflow_text.isDisplayed();
+		driver.switchTo().defaultContent();
+		return result;
 		
 	}
 	
-	public MatterPage addMatter(String matter_name, String workarea, String date, MatterCreationWorkflowPage mattercreationworkflowPage){
+	public MatterPropertiesPage addMatter(String matter_name, String workarea, String date, MatterCreationWorkflowPage mattercreationworkflowpage){
 		
 		driver.switchTo().frame(2);
 		matterName_textbox.sendKeys(matter_name);
 		workArea_popupButton.click();
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		MatterCreationWorkflowPage.WorkAreaTreePopup workareatreepopup=mattercreationworkflowPage.new WorkAreaTreePopup();
-		mattercreationworkflowPage=workareatreepopup.selectWorkArea(mattercreationworkflowPage, workarea, workareatreepopup);
+		MatterCreationWorkflowPage.WorkAreaTreePopup workareatreepopup=mattercreationworkflowpage.new WorkAreaTreePopup();
+		mattercreationworkflowpage=workareatreepopup.selectWorkArea(workarea, workareatreepopup);
 		
+		driver.switchTo().frame(2);
+		matterOpenDate_textbox.clear();
 		matterOpenDate_textbox.sendKeys(date);
+		
 		finish_button.click();
-		return new MatterPage();
+		driver.switchTo().defaultContent();
+		return new MatterPropertiesPage();
 		
 		
 	}
 	
-//************************************************************ Work Area Tree Popup *************************************************************
+/*	public void selectWithText(WebElement element, String text){
 	
+		Select select=new Select(element);
+		List<WebElement> elements=select.getOptions();
+		for(int i=0;i<elements.size();i++)
+		{
+			WebElement option=elements.get(0);
+			if(option.getText().contains(text))
+			 select.selectByIndex(i);
+			else
+				continue;
+		}
+	}*/
+//************************************************************ Work Area Tree Popup *************************************************************
+	// Inner Class
 	public class WorkAreaTreePopup{
 		
 		
 		public WorkAreaTreePopup(){
+		
+			driver.switchTo().defaultContent();
+			Utility.synchronizeAndFindElement("//td[text()='Work Area Tree']", driver);
 			PageFactory.initElements(driver, this);
 		}
 		
-		@FindBy(xpath="//div[text()='Matter Creation Workflow']")
+	
 		WebElement matterCreationWorkflow_text;
 		
 		@FindBy(xpath="/div[@class='modal in ui-draggable FramedDialog']")
@@ -108,16 +128,17 @@ public class MatterCreationWorkflowPage extends Controller{
 		@FindBy(xpath="//input[@value='Tree View']")
 		WebElement treeView_button;
 		
-		public MatterCreationWorkflowPage selectWorkArea(MatterCreationWorkflowPage mattercreationworkflowPage, String workarea,WorkAreaTreePopup workareatreepopup){
+		public MatterCreationWorkflowPage selectWorkArea(String workarea,WorkAreaTreePopup workareatreepopup){
 			
-            workArea_popup.findElement(By.xpath("//div[text()='Matter Creation Workflow']"));
-			System.out.println(driver.findElement(By.xpath("//td[text()='Work Area Tree']")).getText());
+			driver.switchTo().defaultContent();
+			driver.switchTo().frame(3);
 			searchbox.sendKeys(workarea);
 			workareatreepopup=clickOnSearchButton();
+			driver.switchTo().frame(3);
 			workArea_link=driver.findElement(By.xpath("//a[text()='"+workarea+"']"));
 			workArea_link.click();
 			select_button.click();
-			
+			driver.switchTo().defaultContent();
 			return new MatterCreationWorkflowPage();
 		}
 		
@@ -131,32 +152,6 @@ public class MatterCreationWorkflowPage extends Controller{
 		
 		
 	}
-	
-	
-//**************************************************************************************************************************************************************************
-/*	
-	
-	@FindBy(xpath="//select[@id='MonthSelect']")
-	WebElement calender_monthSelect_dropdown;
-
-	@FindBy(xpath="//select[@id='YearSelect']")
-	WebElement calender_yearSelect_dropdown;
-	
-
-	
-	@FindBy(xpath="//tr[td[label[text()='Matter Name:']]]//span")
-	WebElement matterName_text;
-	
-	@FindBy(xpath="//tr[td[label[text()='Open Date:']]]//span")
-	WebElement openDate_text;
-	
-	@FindBy(xpath="//tr[td[label[text()='Matter Number:']]]//span")
-	WebElement matterNumber_number;
-	
-
-	
-
-	*/
 	
 	
 }

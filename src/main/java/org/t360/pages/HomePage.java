@@ -9,7 +9,7 @@ import org.t360.util.Utility;
 
 public class HomePage extends Controller {
 	
-	String document_frame="//iframe[@id='DocumentIFrame']";
+	
 	@FindBy(xpath="//div/h1[contains(text(),'Home Page')]")
 	WebElement homePage_text;
 	
@@ -37,6 +37,7 @@ public class HomePage extends Controller {
 	@FindBy(xpath="//a[text()='Add Matter']")
 	WebElement addMatters_link;
 	
+	
 	public HomePage(){
 		PageFactory.initElements(driver, this);
 	}
@@ -57,9 +58,9 @@ public class HomePage extends Controller {
 			return new HomePage();
 		else{
 		networks_dropdown.click();
-		WebElement netowork_link=Utility.synchronizeAndFindElement("//a[text()='"+name+"']", 10, driver);
+		WebElement netowork_link=Utility.synchronizeAndFindElement("//a[text()='"+name+"']", driver);
 		Utility.scrollAndClick(netowork_link);	
-		Utility.synchronizeAndFindElement("//div/h1[contains(text(),'Home Page')]", 10, driver);
+		Utility.synchronizeAndFindElement("//div/h1[contains(text(),'Home Page')]", driver);
 		return new HomePage();
 		}
 		}
@@ -77,17 +78,18 @@ public class HomePage extends Controller {
 		
 		addMatters_link.click();
 		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
 		return new MatterCreationWorkflowPage();
 		
 	}
 	
+   public SearchAllMattersPage navigateToSearchAllMattersPage()
+   {
+	   searchAllMatters_link.click();
+	   
+	   return new SearchAllMattersPage();
+   }
 	public String getCurrentNetwork(){
 		
 		return networks_dropdown.getText();

@@ -1,5 +1,6 @@
 package org.t360.pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -46,8 +47,8 @@ public class LoginPage extends Controller{
 	public HomePage login(String user, String password)
 	{
 		login_textbox.sendKeys(user);
-		password_textbox.sendKeys(password);
-		login_button.click();
+		password_textbox.sendKeys(password, Keys.ENTER);
+		//login_button.click();
 		
 		return new HomePage();
 

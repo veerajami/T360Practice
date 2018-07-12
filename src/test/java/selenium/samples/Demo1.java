@@ -4,17 +4,17 @@ import org.t360.controller.Controller;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class Demo1 extends Controller{
+public class Demo1 {
 
 	@BeforeMethod
 	public void Start()
 	{
 		System.out.println("started");
-		initialize();
+		
 	}
 	@Test
 	public void test1(){
-		driver.get("");
+		System.out.println("Tested");
 	}
 	
 }
