@@ -3,6 +3,7 @@ package org.t360.util;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -112,6 +113,42 @@ public class WebEventListener extends Controller implements WebDriverEventListen
 	public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void beforeSwitchToWindow(String windowName, WebDriver driver) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void afterSwitchToWindow(String windowName, WebDriver driver) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public <X> void beforeGetScreenshotAs(OutputType<X> target) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public <X> void afterGetScreenshotAs(OutputType<X> target, X screenshot) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void beforeGetText(WebElement element, WebDriver driver) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void afterGetText(WebElement element, WebDriver driver, String text) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

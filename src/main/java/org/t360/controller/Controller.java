@@ -50,7 +50,7 @@ public class Controller {
 
 		}
 		else if(browser.equals("chrome")){
-			System.setProperty("webdriver.chrome.driver", "C:\\My Files\\chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", "C:\\T360WKELMS\\webdriver-manager\\chromedriver.exe");
 			driver=new ChromeDriver();
 
 		}
